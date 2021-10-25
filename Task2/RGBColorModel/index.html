@@ -18,9 +18,48 @@
       img_b = createImage(256, 256);
     }
     function setup() {
+      //pixelDensity(1);
       createCanvas(512, 512);
+      img.resize(256, 256);  
+      img.loadPixels();
+      //console.log(img_r); 
+      img_r.loadPixels();
+      img_b.loadPixels();
+      img_g.loadPixels();
+      //console.log(img_r);
+      for(x=0;x<img.width;x++)
+        for(y=0;y<img.height;y++) {      
+          pos=4*(y*img.width+x);
+      
+          img_r.pixels[pos] = img.pixels[pos];
+          img_r.pixels[pos+3] = 255;
+
+          img_g.pixels[pos+1] = img.pixels[pos+1]; 
+          img_g.pixels[pos+3] = 255; 
+          
+          img_b.pixels[pos+2] = img.pixels[pos+1]; 
+          img_b.pixels[pos+3] = 255; 
+
+          img.pixels[pos] // R value
+          img.pixels[pos+1] // G value
+          img.pixels[pos+2] // B value
+          img.pixels[pos+3] // A value
+      }
+  img.updatePixels();
+  img_r.updatePixels(); 
+  img_b.updatePixels(); 
+  img_g.updatePixels(); 
+      
       img.resize(256, 256);
-      image(img, 0, 0);
+      image(img_r, 0, 0);  
+      image(img_b, 0, 256);
+      image(img_g, 256, 0);
+      img_sum = createImage(256,256);
+      img_sum.blend(img_r,0,0,256,256,0,0,256,256,ADD);
+      img_sum.blend(img_g,0,0,256,256,0,0,256,256,ADD);
+      img_sum.blend(img_b,0,0,256,256,0,0,256,256,ADD);
+      image(img_sum,256,256);
+      //image(img_r, 0, 0);
     }
   </script>
 </html>
